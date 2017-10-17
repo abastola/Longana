@@ -3,6 +3,8 @@
 #include "Stock.h"
 #include "Domino.h"
 #include "Layout.h"
+#include "Human.h"
+#include "Computer.h"
 
 class Round {
 private:
@@ -13,8 +15,8 @@ private:
 	bool passed;
 	int turn;
 	bool gameEnded;
-	Player player1;
-	Player player2;
+	Human player1;
+	Computer player2;
 	Stock stock;
 	Layout layout;
 

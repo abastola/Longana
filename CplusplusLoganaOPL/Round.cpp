@@ -37,7 +37,7 @@ void Round::printDetails() {
 	player1.printHand();
 	cout << "\nPlayer 2 Hand: ";
 	player2.printHand();
-	cout << "\nRound " << (7-engine) << " Stock: ";
+	cout << "\nRound " << (7 - engine) << " Stock: ";
 	stock.printDeck();
 	layout.printBoard();
 }
@@ -97,7 +97,9 @@ void Round::playTurn(Player *player) {
 				if ((stock.getStock()).size() == 0) {
 					countPassed++;
 					cout << "\nPlayer" << turn << "Passed because of empty boneyard." << endl;
-				}else{
+					return;
+				}
+				else {
 					player->hand.addDomino(stock.getTopDominoFromDeck());
 				}
 				printDetails();
@@ -113,17 +115,27 @@ void Round::playTurn(Player *player) {
 		temp = player->hand.getDomino(playingDominoIndex);
 
 		//check if returned domino is double
+
 		if (temp.getSideOne() == temp.getSideTwo()) {
-			cout << "\nWhich side do you want to put the double? 1 for Left and 2 for right: ";
-			int inputSide = 0;
-			cin >> inputSide;
-			if (inputSide == 1) {
-				layout.insertLeft(temp);
+			if (turn == 1) {
+				cout << "\nWhich side do you want to put the double? 1 for Left and 2 for right: ";
+				int inputSide = 0;
+				cin >> inputSide;
+				if (inputSide == 1) {
+					layout.insertLeft(temp);
+				}
+				else {
+					layout.insertRight(temp);
+				}
 			}
 			else {
-				layout.insertRight(temp);
+				layout.insertLeft(temp);
 			}
-			countPassed=0;
+			countPassed = 0;
+
+			cout << "\nPlayer" << turn << " placed ";
+			temp.printDomino();
+			cout << endl;
 			player->hand.removeDomino(playingDominoIndex);
 			return;
 		}
@@ -158,6 +170,9 @@ void Round::playTurn(Player *player) {
 		layout.insertRight(temp);
 	}
 	countPassed = 0;
+	cout << "\nPlayer" << turn << " placed ";
+	temp.printDomino();
+	cout << endl;
 	player->hand.removeDomino(playingDominoIndex);
 
 }

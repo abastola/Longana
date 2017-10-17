@@ -110,8 +110,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Computer.h" />
     <ClInclude Include="Domino.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="Human.h" />
     <ClInclude Include="Layout.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Round.h" />
@@ -120,8 +122,10 @@
     <ClInclude Include="Tournament.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Computer.cpp" />
     <ClCompile Include="Domino.cpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="Layout.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />

@@ -11,7 +11,7 @@ class Player {
 		Hand hand;
 		Player();
 		void updateScore(int a);
-		int  getInput(int requiredSide);
+		virtual int  getInput(int requiredSide);
 		int  validiateInput(int a, int b);
 		int  calculateScore();
 		bool isHandEmpty();

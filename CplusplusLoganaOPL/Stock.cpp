@@ -5,8 +5,8 @@
 #include <random>
 
 Stock::Stock() {
-	for (int i = 0; i <= 6; i++) {
-		for (int j = i; j <= 6; j++) {
+	for (int i = 0; i <= 2; i++) {
+		for (int j = i; j <= 2; j++) {
 			deck.push_back(Domino(i, j));
 		}
 	}
@@ -18,8 +18,8 @@ void Stock::shuffleTheDeck() {
 }
 
 vector<Domino> Stock::DistributeAHand() {
-	vector<Domino> temp(deck.begin(), deck.begin()+8);
-	for (int i = 0; i < 8; i++) {
+	vector<Domino> temp(deck.begin(), deck.begin()+2);
+	for (int i = 0; i < 2; i++) {
 		deck.erase(deck.begin());
 	}
 	return temp;
