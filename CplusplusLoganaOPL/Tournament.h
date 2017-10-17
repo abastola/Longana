@@ -21,28 +21,9 @@ private:
 
 public:
 	Tournament();
-	void playGame(); 
+	void playGame();
+	void printTournamentDetails();
 
 
 
 };
-
-/*
-
-int playingRound = 1;
-
-if (loadFile()) {
-Round round((7-roundNumber));
-round.player1.hand.hand = playerHand;
-round.player2.hand.hand = computerHand;
-round.layout.boardDominos = layout;
-round.stock.deck = boneyard;
-round.passed = p;
-round.turn = t;
-round.printDetails();
-}
-
-
-
-
-*/

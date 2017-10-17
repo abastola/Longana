@@ -3,7 +3,9 @@
 
 int Computer::getInput(int requiredSide) {
 	int temp = -1;
+
 	int moveCOde = findIfMovePossible(requiredSide);
+
 	//If No Move Possible
 	if (moveCOde == -1) {
 
@@ -28,6 +30,7 @@ int Computer::getInput(int requiredSide) {
 		int sideOne = stoi(userInput.substr(0, 1));
 		int sideTwo = stoi(userInput.substr(2, 1));
 		temp = validiateInput(sideOne, sideTwo);
+		drawn = false;
 		return temp;
 	}
 

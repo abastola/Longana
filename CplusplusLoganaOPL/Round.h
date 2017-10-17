@@ -22,7 +22,6 @@ public:
 
 
 	Round(int a);
-	
 	void setHands();
 	void printDetails();
 	void placeFirstDomino();

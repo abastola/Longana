@@ -77,7 +77,7 @@ bool Tournament::loadFile() {
 		istringstream iss(line);
 		iss >> str1 >> str2 >> a;
 
-		tS = 0;
+		tS = a;
 
 		//get Round Number
 		getline(f, line);
@@ -177,6 +177,8 @@ bool Tournament::loadFile() {
 
 		//Set tournament parameters
 
+		//cout << "Extracted tour score : " << tS << endl;
+
 		roundNumber = rN;
 		player1Score = hS;
 		player2Score = cS;
@@ -210,6 +212,10 @@ void Tournament::playGame() {
 		round.passed = p;
 		round.turn = t;
 		round.printDetails();
+		printTournamentDetails();
+		if (round.layout.boardDominos.size() == 0) {
+			round.placeFirstDomino();
+		}
 	}
 	else {
 		int getTournaMentScore;
@@ -224,6 +230,7 @@ void Tournament::playGame() {
 		tournaMentScore = getTournaMentScore;
 		round.setHands();
 		round.printDetails();
+		printTournamentDetails();
 		round.placeFirstDomino();
 	}
 
@@ -312,4 +319,15 @@ void Tournament::playGame() {
 		cout << " ------------------------------" << endl;
 		return;
 	}
+}
+
+
+void Tournament::printTournamentDetails() {
+	cout << "Tournment Score: " << tournaMentScore << endl;
+	cout << "Player 1 Score:  " << player1Score << endl;
+	cout << "Player 2 Score:  " << player2Score << endl;
+	cout << "Turn:            " << t << endl;
+	cout << "Passed:          " << p << endl;
+	cout << endl;
+	system("pause");
 }

@@ -79,7 +79,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="loadFile.txt">
+    <Text Include="case1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="case2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="case3.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
