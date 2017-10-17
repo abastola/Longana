@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "Stock.h"
+#include <stdlib.h> 
+#include <time.h>
+#include <random>
 
 Stock::Stock() {
 	for (int i = 0; i <= 6; i++) {
@@ -10,7 +13,8 @@ Stock::Stock() {
 }
 
 void Stock::shuffleTheDeck() {
-	random_shuffle(deck.begin(), deck.end());
+	auto rng = std::default_random_engine{};
+	shuffle(deck.begin(), deck.end(), rng);
 }
 
 vector<Domino> Stock::DistributeAHand() {

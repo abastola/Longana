@@ -16,6 +16,7 @@ public:
 	void printDomino();
 
 	void setFlipped();
+	bool Flipped();
 	bool findIfDouble();
 
 	int getSides();

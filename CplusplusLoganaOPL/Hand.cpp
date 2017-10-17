@@ -37,6 +37,29 @@ int Hand::findDominoWithSide(int a) {
 	return returnCode;
 }
 
+int Hand::findDominoWithTwoSides(int a, int b) {
+	int count = 0;
+	for (Domino i : hand) {
+		int temp = i.getSides();
+		if (((temp / 10) == a) && ((temp % 10) == b)) {
+			return count;
+		}
+		count++;
+	}
+	return -1;
+}
+
+bool Hand::findEngine(int a) {
+
+	for (Domino i : hand) {
+		int temp = i.getSides();
+		if (((temp / 10) == a) && ((temp % 10) == a)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 //Return Codes Explained
 
 //Found      Double     -> Return Index;
@@ -57,5 +80,9 @@ int Hand::findDominoDouble() {
 
 void Hand::removeDomino(int index) {
 	hand.erase(hand.begin() + index);
+}
+
+Domino Hand::getDomino(int index) {
+	return (hand[index]);
 }
 

@@ -51,6 +51,10 @@ int Domino::getSideTwo() {
 	return ( sideTwo);
 }
 
+bool Domino:: Flipped() {
+	return isFlipped;
+}
+
 //print the domino
 void Domino::printDomino() {
 	if (isFlipped) {

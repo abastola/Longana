@@ -16,8 +16,11 @@ public:
 	void printHand();
 	
 	int findDominoWithSide(int a);
+	bool findEngine(int a);
 	int findDominoDouble();
+	int findDominoWithTwoSides(int a, int b);
 
+	Domino getDomino(int index);
 	void removeDomino(int index);
 
 	inline void addDomino(Domino domino) {

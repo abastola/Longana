@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClInclude Include="Domino.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="Layout.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Round.h" />
     <ClInclude Include="stdafx.h" />
@@ -120,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="Domino.cpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="Layout.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Round.cpp" />

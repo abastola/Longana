@@ -5,9 +5,10 @@ class Player {
 	private:
 		int  score;
 		bool passed;
-		Hand hand;
+		
 
 	public:
+		Hand hand;
 		Player();
 		void updateScore(int a);
 		int  getInput();
