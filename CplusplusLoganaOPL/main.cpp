@@ -7,11 +7,7 @@ void lineBreak() {
 }
 
 int main() {
-	Round round(6);
-	round.setHands();
-	round.printDetails();
-	round.placeFirstDomino();
-	round.findTurn();
+	
 
 	system("pause");
 }

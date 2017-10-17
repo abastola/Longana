@@ -21,7 +21,7 @@ void Layout::insertRight(Domino a) {
 }
 
 void Layout::printBoard() {
-	cout << "\n\nBoard: " << endl;
+	cout << "\nBoard  Layout: ";
 	cout << "L - ";
 	for (Domino i : boardDominos) {
 		i.printDomino();

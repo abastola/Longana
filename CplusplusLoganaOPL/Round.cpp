@@ -10,6 +10,14 @@ Round::Round(int a) {
 	gameEnded = false;
 }
 
+int Round::getCountPassed() {
+	return countPassed;
+}
+
+bool Round::isStockEmpty() {
+	return (stock.getStock()).empty();
+}
+
 void Round::setHands() {
 	stock.shuffleTheDeck();
 	player2.setHand(Hand(stock.DistributeAHand()));
@@ -25,15 +33,22 @@ void Round::setHands() {
 }
 
 void Round::printDetails() {
-	cout << "\nPlayer 1 Hand: \n";
+	cout << "\nPlayer 1 Hand: ";
 	player1.printHand();
-	cout << "\n\nPlayer 2 Hand: \n";
+	cout << "\nPlayer 2 Hand: ";
 	player2.printHand();
-	cout << "\n\nRound Stock: \n";
+	cout << "\nRound " << (7-engine) << " Stock: ";
 	stock.printDeck();
+	layout.printBoard();
 }
 
-void Round::findTurn() {
+int Round::findTurn() {
+	if (player1.isHandEmpty()) {
+		return 1;
+	}
+	if (player2.isHandEmpty()) {
+		return 2;
+	}
 	if (turn == 1) {
 		cout << "\nPlayer 1 turn." << endl;
 		playTurn(&player1);
@@ -44,10 +59,13 @@ void Round::findTurn() {
 		playTurn(&player2);
 		turn = 1;
 	}
+	printDetails();
+	return -1;
 }
 
 void Round::playTurn(Player *player) {
-	
+
+	//Try to put on original side
 	Domino temp;
 	int requiredSide;
 	if (turn == 1) {
@@ -69,10 +87,79 @@ void Round::playTurn(Player *player) {
 		}
 	}
 
-	int playingDominoIndex = player->getInput();
+	int playingDominoIndex = -1;
+	bool requiredSideOne = true;
 
-	cout << "WIll play " << playingDominoIndex << endl;
-	
+	while (true) {
+		playingDominoIndex = player->getInput(requiredSide);
+		if (playingDominoIndex < 0) {
+			if (playingDominoIndex == -1) {
+				if ((stock.getStock()).size() == 0) {
+					countPassed++;
+					cout << "\nPlayer" << turn << "Passed because of empty boneyard." << endl;
+				}else{
+					player->hand.addDomino(stock.getTopDominoFromDeck());
+				}
+				printDetails();
+				continue;
+			}
+			if (playingDominoIndex == -2) {
+				passed = true;
+				countPassed++;
+				cout << "\nPlayer" << turn << "Passed." << endl;
+				return;
+			}
+		}
+		temp = player->hand.getDomino(playingDominoIndex);
+
+		//check if returned domino is double
+		if (temp.getSideOne() == temp.getSideTwo()) {
+			cout << "\nWhich side do you want to put the double? 1 for Left and 2 for right: ";
+			int inputSide = 0;
+			cin >> inputSide;
+			if (inputSide == 1) {
+				layout.insertLeft(temp);
+			}
+			else {
+				layout.insertRight(temp);
+			}
+			countPassed=0;
+			player->hand.removeDomino(playingDominoIndex);
+			return;
+		}
+
+		if (temp.getSideOne() == requiredSide) {
+			requiredSideOne = true;
+			break;
+		}
+		if (temp.getSideTwo() == requiredSide) {
+			requiredSideOne = false;
+			break;
+		}
+
+		cout << "Invalid Domino Selection. Select one with matching PIP." << endl;
+	}
+
+	if (requiredSideOne) {
+		if (turn == 1) {
+			temp.setFlipped();
+		}
+	}
+	else {
+		if (turn == 2) {
+			temp.setFlipped();
+		}
+	}
+
+	if (turn == 1) {
+		layout.insertLeft(temp);
+	}
+	else {
+		layout.insertRight(temp);
+	}
+	countPassed = 0;
+	player->hand.removeDomino(playingDominoIndex);
+
 }
 
 void Round::placeFirstDomino() {
@@ -115,8 +202,15 @@ void Round::placeFirstDomino() {
 	}
 
 	printDetails();
-	layout.printBoard();
 
+}
+
+int Round::getPlayer1Sum() {
+	return player1.getSumOfHands();
+}
+
+int Round::getPlayer2Sum() {
+	return player2.getSumOfHands();
 }
 
 

@@ -24,8 +24,12 @@ public:
 	void setHands();
 	void printDetails();
 	void placeFirstDomino();
-	void findTurn();
+	int findTurn();
 	void playTurn(Player *player);
+	int getCountPassed();
+	bool isStockEmpty();
+	int getPlayer1Sum();
+	int getPlayer2Sum();
 
 
 };

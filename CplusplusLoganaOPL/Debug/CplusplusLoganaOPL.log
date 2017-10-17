@@ -1,1 +1,6 @@
-﻿LINK : fatal error LNK1168: cannot open C:\Users\arjun\onedrive\documents\visual studio 2015\Projects\CplusplusLoganaOPL\Debug\CplusplusLoganaOPL.exe for writing
+﻿  main.cpp
+  Round.cpp
+  Player.cpp
+  Generating Code...
+  CplusplusLoganaOPL.vcxproj -> C:\Users\arjun\OneDrive\Documents\Visual Studio 2015\Projects\CplusplusLoganaOPL\Debug\CplusplusLoganaOPL.exe
+  CplusplusLoganaOPL.vcxproj -> C:\Users\arjun\OneDrive\Documents\Visual Studio 2015\Projects\CplusplusLoganaOPL\Debug\CplusplusLoganaOPL.pdb (Partial PDB)
