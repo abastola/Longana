@@ -9,15 +9,17 @@ int Computer::getInput(int requiredSide) {
 
 		//if not drawn yet
 		if (!drawn) {
-			cout << "\nPlayer 1 drew a card from boneyard." << endl;
+			cout << "\nPlayer 2 will draw a card from boneyard." << endl;
+			system("pause");
 			drawn = true;
 			return -1;
 		}
 
-		//if drawn then pass
+		//if drawn then passW
 		else {
 			passed = true;
-			cout << "\nPlayer 1 entered Pass." << endl;
+			cout << "\nPlayer 2 will pass." << endl;
+			system("pause");
 			return -2;
 		}
 	}

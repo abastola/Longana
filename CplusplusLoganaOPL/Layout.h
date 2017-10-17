@@ -5,10 +5,11 @@
 
 class Layout {
 	private:
-		deque<Domino> boardDominos;
+		
 
 	public:
 		Layout();
+		deque<Domino> boardDominos;
 		Domino getLeft();
 		Domino getRight();
 		void insertLeft(Domino a);

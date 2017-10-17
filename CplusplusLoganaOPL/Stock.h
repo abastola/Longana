@@ -4,10 +4,11 @@
 
 class Stock {
 private:
-	std::vector<Domino> deck;
+	
 
 public:
 	Stock();
+	std::vector<Domino> deck;
 	void shuffleTheDeck();
 	std::vector<Domino> DistributeAHand();
 	Domino getTopDominoFromDeck();

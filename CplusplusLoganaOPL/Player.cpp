@@ -69,7 +69,7 @@ int Player::getInput(int requiredSide) {
 
 			//if move possible
 			if (moveCOde >= 100) {
-				cout << "Hint: Play " << (moveCOde % 100) / 10 << "-" << (moveCOde % 100) % 10 << endl;
+				cout << "Hint: On Left Play " << (moveCOde % 100) / 10 << "-" << (moveCOde % 100) % 10 << endl;
 			}
 			else {
 				cout << "\nNo moves possible. Hint: Pass or Draw " << endl;

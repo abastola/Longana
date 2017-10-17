@@ -1,4 +1,5 @@
 #include "Tournament.h"
+#include <fstream>
 
 Tournament::Tournament() {
 	roundNumber = 1;
@@ -7,10 +8,184 @@ Tournament::Tournament() {
 	tournaMentScore = 5;
 }
 
+Domino parseDomino(string userInput) {
+
+	int sideOne = stoi(userInput.substr(0, 1));
+	int sideTwo = stoi(userInput.substr(2, 1));
+
+	Domino domino(sideOne, sideTwo);
+	return domino;
+}
+
+vector<string> parseVector(string test) {
+	vector<string> cds;
+	string temp;
+	stringstream playerHand(test);
+	while (playerHand >> temp) {
+		cds.push_back(temp);
+	}
+	return cds;
+}
+
+deque <string> parseQueue(string test) {
+	deque<string> cds;
+	string temp;
+	stringstream playerHand(test);
+	while (playerHand >> temp) {
+		cds.push_back(temp);
+	}
+	return cds;
+}
+
 bool Tournament::loadFile() {
-	cout << "Do you want to load a file? 1 for Yes. 2 for No.";
+	cout << "Do you want to load a file? 1: Yes 2: No: ";
 	int temp;
 	cin >> temp;
+	if (temp == 1) {
+		string fileName;
+		cout << "Enter File Name: ";
+		cin >> fileName;
+
+		vector <string> cds;
+		vector <string> pds;
+		deque  <string> lds;
+		vector <string> bds;
+		string test;
+		int tS = 0;
+		int rN = 0;
+		int cS = 0;
+		int hS = 0;
+
+
+
+
+		string line;
+
+		ifstream f(fileName);
+
+		if (!f) {
+			cout << "Error Opening File. Exiting" << endl;
+			system("pause");
+			exit(1);
+		}
+
+		string str1, str2, str3, str4;
+		int a;
+
+		//get Tournament Score
+		getline(f, line);
+		istringstream iss(line);
+		iss >> str1 >> str2 >> a;
+
+		tS = 0;
+
+		//get Round Number
+		getline(f, line);
+		istringstream iso(line);
+		iso >> str1 >> str2 >> a;
+
+		rN = a;
+
+		//skip lines
+		getline(f, line);
+		getline(f, line);
+
+		//get computer hands
+		getline(f, line);
+		test = line;
+		cds = parseVector(test);
+		for (int i = 1; i < cds.size(); i++) {
+			computerHand.push_back(parseDomino(cds[i]));
+		}
+
+		//get computer score
+		getline(f, line);
+		istringstream isw(line);
+		isw >> str1 >> a;
+		cS = a;
+
+		//skip lines
+		getline(f, line);
+		getline(f, line);
+
+		//get player hands
+		getline(f, line);
+		test = line;
+		pds = parseVector(test);
+		for (int i = 1; i < pds.size(); i++) {
+			playerHand.push_back(parseDomino(pds[i]));
+		}
+
+		// get player score
+		getline(f, line);
+		istringstream isv(line);
+		isv >> str1 >> a;
+
+		hS = a;
+
+		//skip lines
+		getline(f, line);
+		getline(f, line);
+
+		//get layout
+		getline(f, line);
+		test = line.substr(1, line.size() - 2);
+		lds = parseQueue(test);
+		for (int i = 1; i < lds.size(); i++) {
+			layout.push_back(parseDomino(lds[i]));
+		}
+
+		//skip two lines
+		getline(f, line);
+		getline(f, line);
+
+		//get Boneyard
+		getline(f, line);
+		test = line;
+		bds = parseVector(test);
+		for (int i = 0; i < bds.size(); i++) {
+			boneyard.push_back(parseDomino(bds[i]));
+		}
+
+		//skip one line
+		getline(f, line);
+
+		//get if passed or not
+		getline(f, line);
+		istringstream isa(line);
+		isa >> str1 >> str2 >> str3 >> str4;
+
+		if (str4.compare("Yes")) {
+			p = true;
+		}
+
+		//skip line
+		getline(f, line);
+
+		//get next player
+		getline(f, line);
+		istringstream ist(line);
+		ist >> str1 >> str2 >> str4;
+
+
+		if ((str4.compare("Computer")) == 0) {
+			t = 2;
+		}
+		else {
+			t = 1;
+		}
+
+		//Set tournament parameters
+
+		roundNumber = rN;
+		player1Score = hS;
+		player2Score = cS;
+		tournaMentScore = tS;
+		loadedFromFile = true;
+
+		return true;
+
+	}
 
 	return false;
 }
@@ -18,18 +193,47 @@ bool Tournament::loadFile() {
 void Tournament::playGame() {
 	//ask if players want to load file
 
+	int playingRound = 1;
+
 	if (loadFile()) {
-		//loadFile
+		playingRound = roundNumber;
 	}
 
-	roundNumber = 2;
-	int startingRound = roundNumber;
+	Round round(7 - playingRound);
+	roundRemaining = (7 - playingRound);
 
-	for (int i = 0; i <= 2; i++) {
-		Round round(2 - i);
+	if (loadedFromFile) {
+		round.player1.hand.hand = playerHand;
+		round.player2.hand.hand = computerHand;
+		round.layout.boardDominos = layout;
+		round.stock.deck = boneyard;
+		round.passed = p;
+		round.turn = t;
+		round.printDetails();
+	}
+	else {
+		int getTournaMentScore;
+		cout << "Enter Tournament Score: ";
+		cin >> getTournaMentScore;
+
+		if (getTournaMentScore < 1) {
+			cout << "Tournament score should be more than 0. Exiting" << endl;
+			system("pause");
+			exit(1);
+		}
+		tournaMentScore = getTournaMentScore;
 		round.setHands();
 		round.printDetails();
 		round.placeFirstDomino();
+	}
+
+	for (int i = playingRound; i <= 7; i++) {
+		if (i != playingRound) {
+			round = Round(7 - i);
+			round.setHands();
+			round.printDetails();
+			round.placeFirstDomino();
+		}
 
 		while (true) {
 
@@ -78,7 +282,8 @@ void Tournament::playGame() {
 			cout << "  Player 1 wins the tournament." << endl;
 			cout << " ------------------------------" << endl;
 			return;
-		}else if (player2Score >= tournaMentScore){
+		}
+		else if (player2Score >= tournaMentScore) {
 			cout << "\n\n\n\n------------------------------" << endl;
 			cout << "  Player 2 wins the tournament." << endl;
 			cout << " ------------------------------" << endl;
@@ -107,6 +312,4 @@ void Tournament::playGame() {
 		cout << " ------------------------------" << endl;
 		return;
 	}
-
-
 }

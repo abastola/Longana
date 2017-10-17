@@ -7,7 +7,7 @@
 #include "Computer.h"
 
 class Round {
-private:
+public:
 	
 	int  engine;
 	bool enginePresent;
@@ -20,7 +20,7 @@ private:
 	Stock stock;
 	Layout layout;
 
-public:
+
 	Round(int a);
 	
 	void setHands();

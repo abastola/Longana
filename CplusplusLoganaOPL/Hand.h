@@ -7,11 +7,12 @@ using namespace std;
 
 class Hand {
 private:
-	vector<Domino> hand;
+	
 
 public:
 	Hand();
 	Hand(vector<Domino> dominos);
+	vector<Domino> hand;
 	
 	void printHand();
 	

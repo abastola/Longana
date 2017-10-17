@@ -96,7 +96,7 @@ void Round::playTurn(Player *player) {
 			if (playingDominoIndex == -1) {
 				if ((stock.getStock()).size() == 0) {
 					countPassed++;
-					cout << "\nPlayer" << turn << "Passed because of empty boneyard." << endl;
+					cout << "\nPlayer" << turn << " passed because of empty boneyard." << endl;
 					return;
 				}
 				else {
@@ -108,7 +108,7 @@ void Round::playTurn(Player *player) {
 			if (playingDominoIndex == -2) {
 				passed = true;
 				countPassed++;
-				cout << "\nPlayer" << turn << "Passed." << endl;
+				cout << "\nPlayer " << turn << " Passed." << endl;
 				return;
 			}
 		}
@@ -129,7 +129,7 @@ void Round::playTurn(Player *player) {
 				}
 			}
 			else {
-				layout.insertLeft(temp);
+				layout.insertRight(temp);
 			}
 			countPassed = 0;
 
