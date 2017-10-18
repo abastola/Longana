@@ -10,12 +10,21 @@
 #include "Tournament.h"
 #include <fstream>
 
+/* ********************************************************************* 
+Function Name: Tournament(Constructor)
+Purpose: To intialize the tournament class. 
+Parameters: N/A
+Return Value: N/A
+Local Variables: N/A
+Algorithm: Intilize round number to 1, each player's score to 0 and tournament score to 0.
+Assistance Received: none 
+********************************************************************* */
 
 Tournament::Tournament() {
 	roundNumber = 1;
 	player1Score = 0;
 	player2Score = 0;
-	tournaMentScore = 5;
+	tournaMentScore = 0;
 }
 
 Domino parseDomino(string userInput) {
