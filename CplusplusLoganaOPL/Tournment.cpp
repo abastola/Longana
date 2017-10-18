@@ -16,13 +16,20 @@ vector<string> parseVector(string test);
 deque <string> parseQueue(string test);
 
 /* ********************************************************************* 
-Function Name: Tournament(Constructor)
-Purpose: To intialize the tournament class. 
-Parameters: N/A
-Return Value: N/A
-Local Variables: N/A
-Algorithm: Intilize round number to 1, each player's score to 0 and tournament score to 0.
-Assistance Received: None 
+Function Name: 
+	Tournament(Constructor)
+Purpose: 
+	To intialize the tournament class. 
+Parameters: 
+	N/A
+Return Value: 
+	N/A
+Local Variables: 
+	N/A
+Algorithm: 
+	Intilize round number to 1, each player's score to 0 and tournament score to 0.
+Assistance Received: 
+	None 
 ********************************************************************* */
 
 Tournament::Tournament() {
@@ -34,7 +41,158 @@ Tournament::Tournament() {
 
 
 
+void Tournament::playGame() {
+	//ask if players want to load file
 
+	int playingRound = 1;
+
+	if (loadFile()) {
+		playingRound = roundNumber;
+	}
+
+	Round round(7 - playingRound);
+	roundRemaining = (7 - playingRound);
+
+	if (loadedFromFile) {
+		round.player1.hand.hand = playerHand;
+		round.player2.hand.hand = computerHand;
+		round.layout.boardDominos = layout;
+		round.stock.deck = boneyard;
+		round.passed = p;
+		round.turn = t;
+		round.printDetails();
+		printTournamentDetails();
+		if (round.layout.boardDominos.size() == 0) {
+			round.placeFirstDomino();
+		}
+	}
+	else {
+		int getTournaMentScore;
+		cout << "Enter Tournament Score: ";
+		cin >> getTournaMentScore;
+
+		if (getTournaMentScore < 1) {
+			cout << "Tournament score should be more than 0. Exiting" << endl;
+			system("pause");
+			exit(1);
+		}
+		tournaMentScore = getTournaMentScore;
+		round.setHands();
+		round.printDetails();
+		printTournamentDetails();
+		round.placeFirstDomino();
+	}
+
+	for (int i = playingRound; i <= 7; i++) {
+		if (i != playingRound) {
+			round = Round(7 - i);
+			round.setHands();
+			round.printDetails();
+			round.placeFirstDomino();
+		}
+
+		while (true) {
+
+			if ((round.isStockEmpty()) && (round.getCountPassed() == 2)) {
+				cout << "Game Ended. Empty Boneyard" << endl;
+				int player1Points = round.getPlayer2Sum();
+				int player2Points = round.getPlayer1Sum();
+
+				if (player1Points > player2Points) {
+					cout << "Game Ended. Player 1 wins." << endl;
+					cout << "Player 1 Points: " << round.getPlayer2Sum() << endl;
+					player1Score += round.getPlayer2Sum();
+				}
+
+				if (player2Points > player1Points) {
+					cout << "Game Ended. Player 2 wins." << endl;
+					cout << "Player 2 Points: " << round.getPlayer1Sum() << endl;
+					player2Score += round.getPlayer1Sum();
+				}
+
+				break;
+			}
+
+			int n = round.findTurn();
+			if (n == 1) {
+				cout << "Game Ended. Player 1 wins." << endl;
+				cout << "Player 1 Points: " << round.getPlayer2Sum() << endl;
+				player1Score += round.getPlayer2Sum();
+				break;
+			}
+
+			if (n == 2) {
+				cout << "Game Ended. Player 2 wins." << endl;
+				cout << "Player 2 Points: " << round.getPlayer1Sum() << endl;
+				player2Score += round.getPlayer1Sum();
+				break;
+			}
+		}
+
+		cout << "\nScore Board: \n" << endl;
+		cout << "Player 1: " << player1Score << endl;
+		cout << "Player 2: " << player2Score << endl;
+
+		if (player1Score >= tournaMentScore) {
+			cout << "\n\n\n------------------------------" << endl;
+			cout << "  Player 1 wins the tournament." << endl;
+			cout << " ------------------------------" << endl;
+			return;
+		}
+		else if (player2Score >= tournaMentScore) {
+			cout << "\n\n\n\n------------------------------" << endl;
+			cout << "  Player 2 wins the tournament." << endl;
+			cout << " ------------------------------" << endl;
+			return;
+		}
+
+		cout << "Beginning another round. ";
+		system("pause");
+	}
+
+	if (player1Score > player2Score) {
+		cout << "\n\n\n------------------------------" << endl;
+		cout << "  Player 1 wins the tournament." << endl;
+		cout << " ------------------------------" << endl;
+		return;
+	}
+	else if (player1Score < player2Score) {
+		cout << " \n\n\n\n------------------------------" << endl;
+		cout << "  Player 2 wins the tournament." << endl;
+		cout << "------------------------------" << endl;
+		return;
+	}
+	else {
+		cout << " \n\n\n\n------------------------------" << endl;
+		cout << "                   It's a draw." << endl;
+		cout << " ------------------------------" << endl;
+		return;
+	}
+}
+
+/* ********************************************************************* 
+Function Name: 
+	loadFile
+Purpose:
+	Ask if user wants to load the file. 
+	Load a serialization file.
+	Parses the file
+	Gets/updates tournament parameters.
+Parameters: 
+	N/A
+Return Value: 
+	True if user loads file, false if doesn't.
+Local Variables: 
+	N/A
+Algorithm: 
+	Go through each line. 
+	Get the line. 
+	Parse the line and get required information.
+	Set the tournament parameters.
+	
+Assistance Received: 
+	None 
+********************************************************************* */
 
 bool Tournament::loadFile() {
 	cout << "Do you want to load a file? 1: Yes 2: No: ";
@@ -172,8 +330,6 @@ bool Tournament::loadFile() {
 
 		//Set tournament parameters
 
-		//cout << "Extracted tour score : " << tS << endl;
-
 		roundNumber = rN;
 		player1Score = hS;
 		player2Score = cS;
@@ -186,136 +342,6 @@ bool Tournament::loadFile() {
 
 	return false;
 }
-
-void Tournament::playGame() {
-	//ask if players want to load file
-
-	int playingRound = 1;
-
-	if (loadFile()) {
-		playingRound = roundNumber;
-	}
-
-	Round round(7 - playingRound);
-	roundRemaining = (7 - playingRound);
-
-	if (loadedFromFile) {
-		round.player1.hand.hand = playerHand;
-		round.player2.hand.hand = computerHand;
-		round.layout.boardDominos = layout;
-		round.stock.deck = boneyard;
-		round.passed = p;
-		round.turn = t;
-		round.printDetails();
-		printTournamentDetails();
-		if (round.layout.boardDominos.size() == 0) {
-			round.placeFirstDomino();
-		}
-	}
-	else {
-		int getTournaMentScore;
-		cout << "Enter Tournament Score: ";
-		cin >> getTournaMentScore;
-
-		if (getTournaMentScore < 1) {
-			cout << "Tournament score should be more than 0. Exiting" << endl;
-			system("pause");
-			exit(1);
-		}
-		tournaMentScore = getTournaMentScore;
-		round.setHands();
-		round.printDetails();
-		printTournamentDetails();
-		round.placeFirstDomino();
-	}
-
-	for (int i = playingRound; i <= 7; i++) {
-		if (i != playingRound) {
-			round = Round(7 - i);
-			round.setHands();
-			round.printDetails();
-			round.placeFirstDomino();
-		}
-
-		while (true) {
-
-			if ((round.isStockEmpty()) && (round.getCountPassed() == 2)) {
-				cout << "Game Ended. Empty Boneyard" << endl;
-				int player1Points = round.getPlayer2Sum();
-				int player2Points = round.getPlayer1Sum();
-
-				if (player1Points > player2Points) {
-					cout << "Game Ended. Player 1 wins." << endl;
-					cout << "Player 1 Points: " << round.getPlayer2Sum() << endl;
-					player1Score += round.getPlayer2Sum();
-				}
-
-				if (player2Points > player1Points) {
-					cout << "Game Ended. Player 2 wins." << endl;
-					cout << "Player 2 Points: " << round.getPlayer1Sum() << endl;
-					player2Score += round.getPlayer1Sum();
-				}
-
-				break;
-			}
-
-			int n = round.findTurn();
-			if (n == 1) {
-				cout << "Game Ended. Player 1 wins." << endl;
-				cout << "Player 1 Points: " << round.getPlayer2Sum() << endl;
-				player1Score += round.getPlayer2Sum();
-				break;
-			}
-
-			if (n == 2) {
-				cout << "Game Ended. Player 2 wins." << endl;
-				cout << "Player 2 Points: " << round.getPlayer1Sum() << endl;
-				player2Score += round.getPlayer1Sum();
-				break;
-			}
-		}
-
-		cout << "\nScore Board: \n" << endl;
-		cout << "Player 1: " << player1Score << endl;
-		cout << "Player 2: " << player2Score << endl;
-
-		if (player1Score >= tournaMentScore) {
-			cout << "\n\n\n------------------------------" << endl;
-			cout << "  Player 1 wins the tournament." << endl;
-			cout << " ------------------------------" << endl;
-			return;
-		}
-		else if (player2Score >= tournaMentScore) {
-			cout << "\n\n\n\n------------------------------" << endl;
-			cout << "  Player 2 wins the tournament." << endl;
-			cout << " ------------------------------" << endl;
-			return;
-		}
-
-		cout << "Beginning another round. ";
-		system("pause");
-	}
-
-	if (player1Score > player2Score) {
-		cout << "\n\n\n------------------------------" << endl;
-		cout << "  Player 1 wins the tournament." << endl;
-		cout << " ------------------------------" << endl;
-		return;
-	}
-	else if (player1Score < player2Score) {
-		cout << " \n\n\n\n------------------------------" << endl;
-		cout << "  Player 2 wins the tournament." << endl;
-		cout << "------------------------------" << endl;
-		return;
-	}
-	else {
-		cout << " \n\n\n\n------------------------------" << endl;
-		cout << "                   It's a draw." << endl;
-		cout << " ------------------------------" << endl;
-		return;
-	}
-}
-
 
 void Tournament::printTournamentDetails() {
 	cout << "Tournment Score: " << tournaMentScore << endl;
