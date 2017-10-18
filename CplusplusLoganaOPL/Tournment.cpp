@@ -1,5 +1,15 @@
+/*
+     ************************************************************
+     Name:  Arjun Bastola
+     Project:  Longana C++
+     Class:  1/Tournament
+     Date:  October 18, 2017
+     ************************************************************
+*/
+
 #include "Tournament.h"
 #include <fstream>
+
 
 Tournament::Tournament() {
 	roundNumber = 1;
