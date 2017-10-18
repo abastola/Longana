@@ -10,6 +10,11 @@
 #include "Tournament.h"
 #include <fstream>
 
+// Function Prototypes
+Domino parseDomino(string userInput);
+vector<string> parseVector(string test);
+deque <string> parseQueue(string test);
+
 /* ********************************************************************* 
 Function Name: Tournament(Constructor)
 Purpose: To intialize the tournament class. 
@@ -17,7 +22,7 @@ Parameters: N/A
 Return Value: N/A
 Local Variables: N/A
 Algorithm: Intilize round number to 1, each player's score to 0 and tournament score to 0.
-Assistance Received: none 
+Assistance Received: None 
 ********************************************************************* */
 
 Tournament::Tournament() {
@@ -27,34 +32,9 @@ Tournament::Tournament() {
 	tournaMentScore = 0;
 }
 
-Domino parseDomino(string userInput) {
 
-	int sideOne = stoi(userInput.substr(0, 1));
-	int sideTwo = stoi(userInput.substr(2, 1));
 
-	Domino domino(sideOne, sideTwo);
-	return domino;
-}
 
-vector<string> parseVector(string test) {
-	vector<string> cds;
-	string temp;
-	stringstream playerHand(test);
-	while (playerHand >> temp) {
-		cds.push_back(temp);
-	}
-	return cds;
-}
-
-deque <string> parseQueue(string test) {
-	deque<string> cds;
-	string temp;
-	stringstream playerHand(test);
-	while (playerHand >> temp) {
-		cds.push_back(temp);
-	}
-	return cds;
-}
 
 bool Tournament::loadFile() {
 	cout << "Do you want to load a file? 1: Yes 2: No: ";
@@ -74,10 +54,6 @@ bool Tournament::loadFile() {
 		int rN = 0;
 		int cS = 0;
 		int hS = 0;
-
-
-
-
 		string line;
 
 		ifstream f(fileName);
@@ -349,4 +325,33 @@ void Tournament::printTournamentDetails() {
 	cout << "Passed:          " << p << endl;
 	cout << endl;
 	system("pause");
+}
+
+vector<string> parseVector(string test) {
+	vector<string> cds;
+	string temp;
+	stringstream playerHand(test);
+	while (playerHand >> temp) {
+		cds.push_back(temp);
+	}
+	return cds;
+}
+
+deque <string> parseQueue(string test) {
+	deque<string> cds;
+	string temp;
+	stringstream playerHand(test);
+	while (playerHand >> temp) {
+		cds.push_back(temp);
+	}
+	return cds;
+}
+
+Domino parseDomino(string userInput) {
+
+	int sideOne = stoi(userInput.substr(0, 1));
+	int sideTwo = stoi(userInput.substr(2, 1));
+
+	Domino domino(sideOne, sideTwo);
+	return domino;
 }
