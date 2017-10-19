@@ -10,8 +10,10 @@
 #pragma once
 #include "Player.h"
 
+// Details of each method is in cpp file
 class Computer : public Player {
 	public:
+		//get index of domino with required side
 		int getInput(int requiredSide);
 	private:
 	
