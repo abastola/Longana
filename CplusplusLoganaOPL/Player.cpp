@@ -27,6 +27,7 @@ Algorithm:
 Assistance Received: 
 	None 
 ********************************************************************* */
+
 Player::Player() {
 	score = 0;
 	passed = false;
@@ -61,6 +62,7 @@ Assistance Received:
 //Return else for domino input
 
 int Player::getInput(int requiredSide) {
+	//temp to store draw, pass or move
 	int temp = -1;
 	while (true) {
 		
