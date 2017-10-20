@@ -344,7 +344,7 @@ bool Tournament::loadFile() {
 		isw >> str1 >> a;
 		cS = a;
 
-		//skip lines
+		//skip two lines
 		getline(f, line);
 		getline(f, line);
 
