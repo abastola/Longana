@@ -105,7 +105,7 @@ bool Domino:: Flipped() {
 	return isFlipped;
 }
 
-//utility to print the domino
+//utility function to print the domino
 void Domino::printDomino() {
 	if (isFlipped) {
 		cout << "|" << sideTwo << "-" << sideOne << "|";
